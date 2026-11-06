@@ -1,0 +1,133 @@
+body{
+    width: 100%;
+    background-color: #000000;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+     display: flex;
+    justify-content: center;    
+}
+
+header {
+    display: flex;
+    width: 90%;
+    padding: 14px 24px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 42px;
+    border: 1px solid #462D0B;
+    background: #050503;
+   border-radius: 42px;
+border: 1px solid #462D0B;
+background: #050503;
+box-shadow: 0 1px 0 0 rgba(199, 153, 61, 0.10) inset, 0 12px 44.8px 0 rgba(199, 153, 61, 0.20);
+
+    position: absolute;
+    top: 20px; 
+    
+    
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 1000; 
+}
+
+header img :last-child{
+    width: 14%;
+    min-width: 120px;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+ul li:not(:first-child)::after {
+    content: "•";
+    color: #ffffff;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+
+li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: "Cormorant Garamond", serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    transition: color 0.3s ease;
+   
+}
+
+
+li a:hover, 
+li a.active {
+    color: #C7993D; 
+  text-shadow: 0 0 29.9px #ffaa00;
+
+    
+}
+
+li a.active:after {
+    content: "•";
+    color: #FFB41E;
+    font-size: 20px;
+    margin-left: 20px;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-btn {
+    background: transparent;
+    border: 1px solid #b99252;
+    color: #b99252; 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.search-btn:hover {
+    box-shadow: 0 0 29.9px rgba(185, 145, 82, 0.64);
+
+}
+.book-btn {
+    color: #050503;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    padding: 12px 18px;
+    align-items: center;
+    border-radius: 999px;
+    background: #C7993D;
+    width: 147px;
+    justify-content: center;
+    border: 1px solid #C7993D;
+    cursor: pointer;
+    transition: all 0.4s ease; 
+}
+
+.book-btn:hover {
+    background-color: transparent; 
+    color: #C7993D; 
+    box-shadow: 0 4px 15px rgba(199, 153, 61, 0.3); 
+    transform: translateY(-2px); 
+}
