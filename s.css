@@ -165,7 +165,7 @@ li a.active:after {
     z-index: 10;
     top:0;
     right:0;
-    width:50%
+    width:130%
     ;   opacity: 0;
 
     transform: translateX(100%) scale(1.1); 
@@ -275,6 +275,118 @@ li a.active:after {
          .b-m{
             display: none;
          }
+
+
+
+
+
+
+         
+.S-2{ 
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    
+    border-top: 2px solid #FFB41E;
+ overflow: hidden;
+box-shadow: 0 -54px 113.4px -13px rgba(255, 163, 37, 0.26);
+}
+
+.S-2 .img {
+    width: 100%;
+   transform: translateY(-20%);
+    position: relative;
+}
+
+ .d-2{
+    position:absolute;
+    z-index: 100;
+    width: 100%;
+   margin-top: 14%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+   
+    
+  }
+
+
+   .d-2 h2{
+    color: #C7993D;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 2.16px;
+    text-transform: uppercase;
+    
+   }
+
+   .d-2 h3{ margin: 0;
+    color: #F2EBD6;
+    font-family: "Bebas Neue";
+    font-size:75px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
+
+   }
+
+.S-2 {
+    overflow-x: hidden;
+
+}
+
+.S-2 .i {
+    position: absolute;
+    z-index: 100;
+    top: 25px;
+    right: -100%;
+    width: 40%;
+    transition: right 0.9s ease-in-out;
+}
+
+.S-2 .i-2 {
+    position: absolute;
+    z-index: 100;
+    top: 25px;
+    left: -100%;
+    width: 40%;
+    transform: scaleX(-1);
+    transition: left 0.9s ease-in-out;
+}
+
+
+.S-2:hover .i {
+    right: -12%;
+    
+}
+
+.S-2:hover .i-2 {
+    left: -12%;
+}
+
+
+ 
+
+
+      .d-2 p{
+
+                 color: #A8A394;
+                text-wrap-style: pretty;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 150%; 
+                margin: 0;
+                margin-bottom: 15px;
+                width: 655px;
+                text-align: center;
+      }
 
 
          @media (min-width: 1024px) {
@@ -415,7 +527,7 @@ li a.active:after {
     }
 
     .s-1 {
-        min-height: 70vh;
+        min-height: 60vh;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -488,6 +600,113 @@ li a.active:after {
         display: block;
         
     }
+    .S-2{ 
+    position: relative;
+    width: 100%;
+  height: 80vh;
+    border-top: 2px solid #FFB41E;
+
+        box-shadow: 0 -54px 113.4px -13px rgba(255, 163, 37, 0.26);
+}
+
+.S-2 .img {
+    width: fit-content;
+
+  
+    
+  
+}
+
+ .d-2{
+    position:absolute;
+    z-index: 100;
+    width: 100%;
+   margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+   
+    
+  }
+
+
+   .d-2 h2{
+   color: #C7993D;
+text-align: center;
+font-family: Inter;
+font-size: 10px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 1.8px;
+text-transform: uppercase;
+    
+   }
+
+   .d-2 h3{ color: #F2EBD6;
+            text-align: center;
+            font-family: "Bebas Neue";
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 90%; 
+            margin: 10px 0;
+
+   }
+
+
+
+.S-2 .i {
+    position: absolute;
+    z-index: 1000;
+    top: 20%;
+    right: -50%;
+    width:40%;
+    transition: right 0.9s ease-in-out;
+}
+
+.S-2 .i-2 {
+     position: absolute;
+    z-index: 1000;
+    top: 20%;
+   left: -50%;
+    width:40%;
+    transition: right 0.9s ease-in-out;
+    transform: scaleX(-1);
+    transition: left 0.9s ease-in-out;
+}
+
+
+.S-2:hover .i {
+        right: -12%; 
+    }
+
+    .S-2:hover .i-2 {
+        left: -12%; 
+    }
+
+
+
+ 
+
+
+      .d-2 p{
+
+                 color: #A8A394;
+                text-wrap-style: balance;
+                text-align: center;
+                font-family: Inter;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; 
+                letter-spacing: 2.16px;
+                text-transform: uppercase;
+                width: 300px;
+      }
+
     
 }
 
@@ -548,8 +767,8 @@ li a.active:after {
     }
 
     .hro {
-        width: 131%;
-        left: 50px;
+        width: 134%;
+        left: 10px;
 
        
     }
@@ -584,11 +803,12 @@ li a.active:after {
             font-style: normal;
             font-weight: 400;
             line-height: 150%; 
+            width: 100%;
     }
 
     .d-1 .book-btn {
         width: 100%;
-        max-width: 200px;
+        max-width: 190px;
         height: 48px;
         margin-top: 5px;
         font-size: 15px;
@@ -600,12 +820,120 @@ li a.active:after {
         display: block;
         width: 40px;
     }
+
+    .S-2{ 
+    position: relative;
+    width: 100%;
+  height: 90vh;
+    border-top: 2px solid #FFB41E;
+
+        box-shadow: 0 -54px 113.4px -13px rgba(255, 163, 37, 0.26);
+}
+
+.S-2 .img {
+    width: fit-content;
+
+  
+    
+  
+}
+
+ .d-2{
+    position:absolute;
+    z-index: 100;
+    width: 100%;
+   margin-top: 14%;
+    display: flex;
+    flex-direction: column;
+    
+    margin-left: 40px;
+    text-align: left;
+    width: 200px;
+   
+    
+  }
+
+
+   .d-2 h2{
+   color: #C7993D;
+    text-align: center;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    text-align: left;
+    
+   }
+
+   .d-2 h3{color: #F2EBD6;
+            font-family: "Bebas Neue";
+            font-size: 55px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 90%;
+
+   }
+
+
+
+.S-2 .i {
+    position: absolute;
+    z-index: 1000;
+    top: 10%;
+    right: -100%;
+    width:90%;
+    transition: right 0.9s ease-in-out;
+}
+
+.S-2 .i-2 {
+     position: absolute;
+    z-index: 1000;
+    top: 20%;
+   left: -50%;
+    width:40%;
+    transition: right 0.9s ease-in-out;
+    transform: scaleX(-1);display: none;
+    transition: left 0.9s ease-in-out;
 }
 
 
-/* .S-2{
-    width: 100%;
-    background-color: #462D0B;
-} */
+.S-2:hover .i {
+        right: -42%; 
+    }
+
+    .S-2:hover .i-2 {
+        left: -12%; 
+    }
+
+
+
+ 
+
+
+      .d-2 p{
+        width: 100%;
+
+                color: #D9D9D9;
+         text-wrap-style: pretty;
+            color: #D9D9D9;
+            text-wrap-style: pretty;
+            font-family: Inter;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%; 
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+                text-align: left;
+
+      }
+
+    
+}
+
+
 
 
