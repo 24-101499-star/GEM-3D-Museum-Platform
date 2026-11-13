@@ -3,192 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Grand Egyptian Museum</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="s.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/footer.css">
+
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js"></script>
-    <script src="js.js" defer></script>
-    <title>GEM-3D-Museum-Platform</title>
+    <script src="js/main.js" defer></script>
 </head>
 <body>
-<header>
-    <a href="index.html" class="logo-link"><img src="img/Frame 2.svg" alt="GEM – Grand Egyptian Museum" class="logo"></a>
 
-    <nav class="nav-links" aria-label="Main">
+<header class="site-header">
+    <a href="index.html"><img class="logo" src="assets/images/logo.svg" alt="GEM – Grand Egyptian Museum"></a>
+
+    <nav class="main-nav" aria-label="Main">
         <ul>
             <li><a href="index.html" class="active" aria-current="page">Home</a></li>
             <li><a href="collections.html">Collections</a></li>
-            <li><a href="#Visit">Visit</a></li>
-            <li><a href="#Research">Research</a></li>
-            <li><a href="#About">About</a></li>
+            <li><a href="#visit">Visit</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#about">About</a></li>
         </ul>
     </nav>
 
     <div class="header-actions">
-        <button class="search-btn" type="button" aria-label="Search">
-            <img src="img/btn-search.svg" alt="">
-        </button>
-        <a href="#Tickets" class="book-btn">Book tickets</a>
+        <button class="search-btn" type="button" aria-label="Search"><img src="assets/images/icon-search.svg" alt=""></button>
+        <a href="#tickets" class="btn">Book tickets</a>
     </div>
 
     <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <img src="img/iconoir_menu-scale.svg" alt="">
+        <img src="assets/images/icon-menu.svg" alt="">
     </button>
 
     <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
         <a href="index.html" class="active" aria-current="page">Home</a>
         <a href="collections.html">Collections</a>
-        <a href="#Visit">Visit</a>
-        <a href="#Research">Research</a>
-        <a href="#About">About</a>
-        <a href="#Tickets" class="book-btn">Book tickets</a>
+        <a href="#visit">Visit</a>
+        <a href="#research">Research</a>
+        <a href="#about">About</a>
+        <a href="#tickets" class="btn">Book tickets</a>
     </nav>
 </header>
 <div class="menu-backdrop" hidden></div>
 
 <main>
-<section class="s-1" id="home">
-    <img class="back" src="img/WhatsApp Image 2026-10-31 at 6_imgupscaler.ai_Beta_2K 1.svg" alt="">
-    <img class="hro" src="img/Group 1_imgupscaler.ai_Beta_2K 1.svg" alt="Golden face of an Egyptian pharaoh">
+    <section class="hero">
+        <img class="hero-bg" src="assets/images/hero-hieroglyphs.webp" alt="">
+        <img class="hero-pharaoh" src="assets/images/hero-pharaoh.webp" alt="Golden face of an Egyptian pharaoh" fetchpriority="high">
 
-    <div class="d-1">
-        <h2>THE GRAND EGYPTIAN MUSEUM</h2>
-        <h1>GRAND</h1>
-        <h3>Egyptian</h3>
-        <h1>MUSEUM</h1>
-        <p>Ancient wonders. A new perspective. <br>Discover the art, stories and extraordinary legacy of ancient Egypt.</p>
-        <a href="collections.html" class="book-btn">Explore<span class="only-desktop">&nbsp;artifact</span><span class="only-compact">&nbsp;the collection</span> <span aria-hidden="true">&rarr;</span></a>
-    </div>
-</section>
-
-<section class="S-2">
-    <img class="img" src="img/Frame 15.svg" alt="">
-    <img class="i" src="img/Screenshot 2026-10-31 213155 2.svg" alt="">
-    <img class="i-2" src="img/Screenshot 2026-10-31 213155 2.svg" alt="">
-
-    <div class="d-2">
-        <h2>A Timeless Sanctuary of Civilization</h2>
-        <h3>The Chronicle of Ages</h3>
-        <p>Standing tall at the edge of the Giza plateau, this monumental gateway bridges the ancient world and the modern era. It houses the world's most extensive collection of Pharaonic treasures, offering an immersive journey through millennia of royal dynasties, sacred rituals, and unparalleled artistry.</p>
-    </div>
-</section>
-
-<section class="s-3">
-    <div class="d-33">
-        <div class="d-3">
-            <h2>THE GRAND EGYPTIAN MUSEUM</h2>
-            <h1>TUTANKHAMUN</h1>
-            <h3>Golden</h3>
-            <h1>EXPERIENCE</h1>
+        <div class="hero-text">
+            <p class="eyebrow">The Grand Egyptian Museum</p>
+            <h1 class="display"><span>Grand</span><em>Egyptian</em><span>Museum</span></h1>
+            <p class="hero-lead">Ancient wonders. A new perspective. <br>Discover the art, stories and extraordinary legacy of ancient Egypt.</p>
+            <a href="collections.html" class="btn btn-lg">Explore<span class="label-long">artifact</span><span class="label-short">the collection</span> <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <p>Ancient wonders. A new perspective. Discover the art, stories and extraordinary legacy of ancient Egypt. Where history meets modern innovation. Step into the immersive halls of time. Unveiling the eternal secrets of the pharaohs. A legendary journey beyond imagination.</p>
-    </div>
-</section>
+    </section>
 
-<section class="s-4">
-    <video src="img/Tutankhamun Immersive Exhibition- Trailer.mp4" autoplay muted loop playsinline preload="metadata"></video>
-</section>
+    <section class="chronicle">
+        <img class="chronicle-glow" src="assets/images/chronicle-glow.webp" alt="">
+        <img class="chronicle-relic right" src="assets/images/chronicle-gold-relic.webp" alt="">
+        <img class="chronicle-relic left" src="assets/images/chronicle-gold-relic.webp" alt="">
 
-<section class="s-5">
-    <img class="img-5" src="img/Mask group.svg" alt="">
-
-    <div class="d-44">
-        <div class="d-4">
-            <h2>ROYAL AMULET</h2>
-            <h1>THE WINGED</h1>
-            <h3>Scarab</h3>
-            <h1>PROTECTION</h1>
+        <div class="chronicle-text">
+            <p class="eyebrow">A Timeless Sanctuary of Civilization</p>
+            <h2 class="display">The Chronicle of Ages</h2>
+            <p class="caps-text">Standing tall at the edge of the Giza plateau, this monumental gateway bridges the ancient world and the modern era. It houses the world's most extensive collection of Pharaonic treasures, offering an immersive journey through millennia of royal dynasties, sacred rituals, and unparalleled artistry.</p>
         </div>
-        <p>The sacred scarab beetle, known as Khepri in ancient Egypt, symbolized renewal and resurrection. This winged amulet from Tutankhamun's tomb was crafted from gold, lapis lazuli, and turquoise. Placed on the deceased's chest, it provided magical protection for rebirth in the afterlife.</p>
-        <img src="img/Funerary golden mask of King Tutankhamun 1.svg" alt="Funerary golden mask of King Tutankhamun" loading="lazy">
-        <p>A closer look at the golden face of Pharaoh Tutankhamun and his amulets, which were essential for his eternal journey. Charged with spells from the Book of the Dead, they empowered him to face the judgment of Osiris and exist among the stars.</p>
-    </div>
+    </section>
 
-    <img class="bug" src="img/ss.svg" alt="Winged scarab pectoral of Tutankhamun">
-    <img class="bug-2" src="img/ss.svg" alt="" loading="lazy">
-</section>
-
-<section class="s-6" id="Collections">
-    <img class="iiii" src="img/Mask group.svg" alt="">
-    <div class="d-06">
-        <div class="d-6">
-            <h2>EXHIBITION HIGHLIGHTS</h2>
-            <h1>GRAND MUSEUM</h1>
-            <h3>Royal</h3>
-            <h1>COLLECTIONS</h1>
+    <section class="golden">
+        <div class="golden-title">
+            <p class="eyebrow">The Grand Egyptian Museum</p>
+            <h2 class="display"><span>Tutankhamun</span><em>Golden</em><span>Experience</span></h2>
         </div>
-        <p>A closer look at the golden face of Pharaoh Tutankhamun and his amulets, which were essential for his eternal journey. Charged with spells from the Book of the Dead, they empowered him to face the judgment of Osiris and exist among the stars.</p>
-    </div>
+        <p class="caps-text">Ancient wonders. A new perspective. Discover the art, stories and extraordinary legacy of ancient Egypt. Where history meets modern innovation. Step into the immersive halls of time. Unveiling the eternal secrets of the pharaohs. A legendary journey beyond imagination.</p>
+    </section>
 
-    <div class="d-6a">
-        <article class="d-66">
-            <div class="img-wrapper"><img src="img/Rectangle 15.svg" alt="The Colossus of Ramses II" loading="lazy"></div>
-            <h2>The Colossus of Ramses II</h2>
-            <p>Standing majestically in the grand atrium, this monumental statue of Ramses II welcomes visitors to experience the timeless scale and glory of pharaonic architecture.</p>
-        </article>
-        <article class="d-66">
-            <div class="img-wrapper"><img src="img/Rectangle 16.svg" alt="The golden royal relic" loading="lazy"></div>
-            <h2>The Golden Royal Relic</h2>
-            <p>Crafted with exquisite gold and inlaid precious stones, this magnificent relic symbolizes divine royalty and the eternal journey into the afterlife.</p>
-        </article>
-        <article class="d-66">
-            <div class="img-wrapper"><img src="img/Rectangle 17.svg" alt="The seated pharaoh statue" loading="lazy"></div>
-            <h2>The Seated Pharaoh Statue</h2>
-            <p>Sculpted from fine dark stone, this majestic seated statue showcases the supreme power, strength, and divine authority of ancient Egyptian kings.</p>
-        </article>
-        <article class="d-66">
-            <div class="img-wrapper"><img src="img/Rectangle 18.svg" alt="The royal monument of Hatshepsut" loading="lazy"></div>
-            <h2>The Royal Monument of Hatshepsut</h2>
-            <p>Rising along the museum galleries, this stunning royal sculpture reflects the artistic brilliance and legacy of Egypt's most powerful pharaohs.</p>
-        </article>
-    </div>
-</section>
+    <section class="trailer">
+        <video src="assets/video/tutankhamun-trailer.mp4" autoplay muted loop playsinline preload="metadata"></video>
+    </section>
 
-<section class="s-7" id="AR">
-    <div class="d-7">
-        <h2>AUGMENTED REALITY EXPERIENCE</h2>
-        <h1>THE PHARAOH IN<br>YOUR ROOM</h1>
-        <p>Scan the code with your phone to bridge the gap between dimensions. Place life-size royal artifacts directly in your space and witness the divine craftsmanship of ancient Egypt up close.</p>
-        <img class="qr" src="Screenshot 2026-11-09 215246.png" alt="QR code to open the AR experience">
-        <button class="book-btn ar-btn" type="button">AR EXPERIENCE</button>
-    </div>
-    <div class="hd">
-        <model-viewer
-            src="tutankhamen_emerging_from_a_lotus.glb"
-            alt="3D model of Tutankhamun emerging from a lotus"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            camera-controls
-            touch-action="pan-y"
-            tone-mapping="neutral"
-            shadow-intensity="1"
-            auto-rotate
-            rotation-per-second="25deg"
-            min-camera-orbit="-180deg 0deg 11.1m"
-            max-camera-orbit="180deg 74deg auto"
-            min-field-of-view="30deg">
-        </model-viewer>
-    </div>
-</section>
+    <section class="scarab">
+        <img class="scarab-wall" src="assets/images/hieroglyph-wall.webp" alt="">
 
-<section class="s-8">
-    <div class="d-8">
-        <h2>THE ETERNAL VAULT</h2>
-        <h1>ECHOES OF<br>ETERNITY</h1>
-        <p>Step into the golden heartbeat of ancient history, where masterworks carved in pure light and gold whisper the timeless secrets of an eternal civilization. Wander</p>
-        <p>through sacred chambers where every gleaming artifact stands as a living testament to a divine sovereign power, bridging the silent gap between mortal hands and immortal majesty.</p>
-    </div>
-    <img class="mask-ring" src="Group 12.gif" alt="Golden mask of Tutankhamun encircled by the words Valley of the Kings, Eternity, Dynasty XVIII" loading="lazy">
-</section>
+        <div class="scarab-text">
+            <p class="eyebrow">Royal Amulet</p>
+            <h2 class="display"><span>The Winged</span><em>Scarab</em><span>Protection</span></h2>
+            <p class="caps-text">The sacred scarab beetle, known as Khepri in ancient Egypt, symbolized renewal and resurrection. This winged amulet from Tutankhamun's tomb was crafted from gold, lapis lazuli, and turquoise. Placed on the deceased's chest, it provided magical protection for rebirth in the afterlife.</p>
+            <img src="assets/images/golden-mask.webp" alt="Funerary golden mask of King Tutankhamun" loading="lazy" width="840" height="1257">
+            <p class="caps-text">A closer look at the golden face of Pharaoh Tutankhamun and his amulets, which were essential for his eternal journey. Charged with spells from the Book of the Dead, they empowered him to face the judgment of Osiris and exist among the stars.</p>
+        </div>
+
+        <img class="scarab-sticky" src="assets/images/scarab-pectoral.webp" alt="Winged scarab pectoral of Tutankhamun">
+        <img class="scarab-bottom" src="assets/images/scarab-pectoral.webp" alt="">
+    </section>
+
+    <section class="highlights" id="collections">
+        <img class="highlights-wall" src="assets/images/hieroglyph-wall.webp" alt="">
+
+        <div class="highlights-intro">
+            <div>
+                <p class="eyebrow">Exhibition Highlights</p>
+                <h2 class="display"><span>Grand Museum</span><em>Royal</em><span>Collections</span></h2>
+            </div>
+            <p class="caps-text">A closer look at the golden face of Pharaoh Tutankhamun and his amulets, which were essential for his eternal journey. Charged with spells from the Book of the Dead, they empowered him to face the judgment of Osiris and exist among the stars.</p>
+        </div>
+
+        <div class="highlights-grid">
+            <article class="highlight">
+                <div class="highlight-img"><img src="assets/images/highlight-ramses.webp" alt="The Colossus of Ramses II" loading="lazy" width="570" height="864"></div>
+                <h3>The Colossus of Ramses II</h3>
+                <p>Standing majestically in the grand atrium, this monumental statue of Ramses II welcomes visitors to experience the timeless scale and glory of pharaonic architecture.</p>
+            </article>
+            <article class="highlight">
+                <div class="highlight-img"><img src="assets/images/highlight-golden-relic.webp" alt="The golden royal relic" loading="lazy" width="570" height="634"></div>
+                <h3>The Golden Royal Relic</h3>
+                <p>Crafted with exquisite gold and inlaid precious stones, this magnificent relic symbolizes divine royalty and the eternal journey into the afterlife.</p>
+            </article>
+            <article class="highlight">
+                <div class="highlight-img"><img src="assets/images/highlight-seated-pharaoh.webp" alt="The seated pharaoh statue" loading="lazy" width="570" height="864"></div>
+                <h3>The Seated Pharaoh Statue</h3>
+                <p>Sculpted from fine dark stone, this majestic seated statue showcases the supreme power, strength, and divine authority of ancient Egyptian kings.</p>
+            </article>
+            <article class="highlight">
+                <div class="highlight-img"><img src="assets/images/highlight-hatshepsut.webp" alt="The royal monument of Hatshepsut" loading="lazy" width="570" height="634"></div>
+                <h3>The Royal Monument of Hatshepsut</h3>
+                <p>Rising along the museum galleries, this stunning royal sculpture reflects the artistic brilliance and legacy of Egypt's most powerful pharaohs.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="ar" id="ar">
+        <div class="ar-text">
+            <p class="eyebrow">Augmented Reality Experience</p>
+            <h2 class="display">The Pharaoh in<br>Your Room</h2>
+            <p class="caps-text">Scan the code with your phone to bridge the gap between dimensions. Place life-size royal artifacts directly in your space and witness the divine craftsmanship of ancient Egypt up close.</p>
+            <img class="ar-qr" src="assets/images/ar-qr.png" alt="QR code that opens the AR experience on your phone">
+            <button class="btn ar-btn" type="button">AR EXPERIENCE</button>
+        </div>
+
+        <div class="ar-model">
+            <model-viewer
+                src="assets/models/tutankhamun-lotus.glb"
+                alt="3D model of Tutankhamun emerging from a lotus"
+                ar
+                ar-modes="webxr scene-viewer quick-look"
+                camera-controls
+                touch-action="pan-y"
+                interaction-prompt="none"
+                tone-mapping="neutral"
+                shadow-intensity="1"
+                auto-rotate
+                rotation-per-second="25deg"
+                min-camera-orbit="-180deg 0deg 11.1m"
+                max-camera-orbit="180deg 74deg auto"
+                min-field-of-view="30deg">
+            </model-viewer>
+        </div>
+    </section>
+
+    <section class="echoes">
+        <div class="echoes-text">
+            <p class="eyebrow">The Eternal Vault</p>
+            <h2 class="display">Echoes of<br>Eternity</h2>
+            <p class="caps-text">Step into the golden heartbeat of ancient history, where masterworks carved in pure light and gold whisper the timeless secrets of an eternal civilization. Wander</p>
+            <p class="caps-text">through sacred chambers where every gleaming artifact stands as a living testament to a divine sovereign power, bridging the silent gap between mortal hands and immortal majesty.</p>
+        </div>
+        <img class="echoes-mask" src="assets/images/echoes-mask.gif" width="1196" height="1088" alt="Golden mask of Tutankhamun inside a ring reading Valley of the Kings, Eternity, Dynasty XVIII" loading="lazy">
+    </section>
 </main>
 
-<footer class="site-footer" id="footer">
+<footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-top">
             <div class="footer-brand">
-                <img class="footer-logo" src="img/Frame 2.svg" alt="GEM – Grand Egyptian Museum">
+                <img class="footer-logo" src="assets/images/logo.svg" alt="GEM – Grand Egyptian Museum">
                 <p>Eternal legacy, timeless craftsmanship, and the preservation of ancient heritage.</p>
             </div>
 
@@ -196,37 +189,37 @@
                 <h3>Exhibitions</h3>
                 <nav aria-label="Exhibitions">
                     <a href="collections.html">All Collections</a>
-                    <a href="#Mummies">Royal Mummies</a>
-                    <a href="#Tutankhamun">Tutankhamun Vault</a>
-                    <a href="#Artifacts">Golden Artifacts</a>
-                    <a href="#Tours">Special Tours</a>
+                    <a href="#mummies">Royal Mummies</a>
+                    <a href="#tutankhamun">Tutankhamun Vault</a>
+                    <a href="#artifacts">Golden Artifacts</a>
+                    <a href="#tours">Special Tours</a>
                 </nav>
             </div>
 
             <div class="footer-col">
                 <h3>About Us</h3>
                 <nav aria-label="About us">
-                    <a href="#About">Our Story</a>
-                    <a href="#Architecture">Architecture</a>
-                    <a href="#Sustainability">Sustainability</a>
-                    <a href="#Press">Press &amp; Media</a>
+                    <a href="#about">Our Story</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#sustainability">Sustainability</a>
+                    <a href="#press">Press &amp; Media</a>
                 </nav>
             </div>
 
             <div class="footer-col">
                 <h3>Help &amp; Support</h3>
                 <nav aria-label="Help and support">
-                    <a href="#FAQs">FAQs</a>
-                    <a href="#Tickets">Ticket Booking</a>
-                    <a href="#Visit">Plan Your Visit</a>
-                    <a href="#Contact">Contact Us</a>
+                    <a href="#faqs">FAQs</a>
+                    <a href="#tickets">Ticket Booking</a>
+                    <a href="#visit">Plan Your Visit</a>
+                    <a href="#contact">Contact Us</a>
                 </nav>
             </div>
 
             <div class="footer-col footer-news">
                 <h3>Newsletter</h3>
                 <p>Join our mailing list for exclusive updates and early access to new collections.</p>
-                <form class="newsletter" action="#" onsubmit="return false">
+                <form class="newsletter">
                     <input type="email" name="email" placeholder="Enter your email" aria-label="Email address" required>
                     <button type="submit" aria-label="Subscribe">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -235,26 +228,21 @@
             </div>
         </div>
 
-        <img class="footer-banner" src="img/illustration-container.png" alt="Pharaonic frieze with pyramids, sun and moon">
+        <img class="footer-banner" src="assets/images/footer-frieze.webp" alt="Pharaonic frieze with pyramids, sun and moon" width="1120" height="200">
 
         <div class="footer-bottom">
             <div class="footer-social">
-                <a href="#" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <a href="#" aria-label="Twitter">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                </a>
-                <a href="#" aria-label="YouTube">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                </a>
+                <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
             </div>
             <div class="footer-legal">
-                <a href="#Privacy">Privacy Policy</a>
-                <a href="#Terms">Terms of Service</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
             </div>
         </div>
     </div>
 </footer>
+
 </body>
 </html>
