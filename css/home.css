@@ -1,0 +1,493 @@
+/* Homepage sections, top to bottom.
+   Spacing follows the Figma frames: 1280px desktop, 744px tablet, 402px mobile. */
+
+/* ---------- Hero ---------- */
+
+.hero {
+    position: relative;
+    height: clamp(720px, 100vh, 993px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--gold);
+}
+
+/* faint gold ring behind the pharaoh */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 5%;
+    left: 40%;
+    width: 1038px;
+    aspect-ratio: 1;
+    border: 2px solid #FFD700;
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0.06;
+}
+
+.hero-pharaoh {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: 100%;
+    max-width: none;
+    opacity: 0;
+    transform: translateX(100%) scale(1.1);
+    filter: blur(15px);
+}
+
+.hero-pharaoh.is-visible { animation: pharaoh-in 2.5s ease-in-out forwards; }
+
+@keyframes pharaoh-in {
+    0%   { opacity: 0; transform: translateX(100%) scale(1.1); filter: blur(15px); }
+    70%  { opacity: 1; transform: translateX(-1%) scale(1);   filter: blur(0); }
+    100% { opacity: 1; transform: none;                       filter: blur(0); }
+}
+
+.hero-text {
+    position: absolute;
+    z-index: 2;
+    top: 230px;
+    left: 48px;
+    max-width: 480px;
+}
+
+.hero-text .eyebrow { margin-bottom: 16px; }
+
+.hero-text .display { font-size: 108px; line-height: 0.72; }
+.hero-text .display em { margin: 0; }
+
+.hero-lead {
+    margin: 26px 0 30px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.label-short { display: none; }
+
+
+/* ---------- The Chronicle of Ages ---------- */
+
+.chronicle {
+    position: relative;
+    min-height: 910px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-top: 2px solid var(--gold-bright);
+    box-shadow: 0 -54px 113.4px -13px rgba(255, 163, 37, 0.26);
+}
+
+.chronicle-glow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* gold relics slide in from both sides on hover or when scrolled into view */
+.chronicle-relic {
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    width: 40%;
+    pointer-events: none;
+    transition: left 0.9s ease-in-out, right 0.9s ease-in-out;
+}
+
+.chronicle-relic.right { right: -100%; }
+.chronicle-relic.left { left: -100%; transform: scaleX(-1); }
+
+.chronicle:hover .chronicle-relic.right,
+.chronicle.in-view .chronicle-relic.right { right: -12%; }
+
+.chronicle:hover .chronicle-relic.left,
+.chronicle.in-view .chronicle-relic.left { left: -12%; }
+
+.chronicle-text {
+    position: relative;
+    z-index: 2;
+    width: min(640px, 100% - 96px);
+    text-align: center;
+}
+
+.chronicle-text .eyebrow { margin-bottom: 12px; font-size: 10px; letter-spacing: 1.8px; }
+.chronicle-text .display { margin-bottom: 26px; font-size: 78px; }
+
+
+/* ---------- Tutankhamun Golden Experience ---------- */
+
+.golden {
+    display: flex;
+    align-items: flex-start;
+    gap: 120px;
+    padding: 42px 75px 30px 72px;
+}
+
+.golden-title { flex: none; }
+.golden .caps-text { flex: 1; max-width: 700px; margin-top: 15px; }
+
+
+/* ---------- Trailer video ---------- */
+
+.trailer video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1280 / 623;
+    object-fit: cover;
+    border-bottom: 2px solid var(--gold-bright);
+}
+
+
+/* ---------- Winged Scarab ----------
+   The left scarab is sticky, so it stays on screen while the text scrolls past.
+   A second scarab peeks in from the right at the bottom of the section. */
+
+.scarab {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 103px 0 1005px;
+    overflow: clip;   /* clip, not hidden, so position: sticky still works */
+}
+
+.scarab-wall {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right top;
+    pointer-events: none;
+}
+
+.scarab-text {
+    position: relative;
+    z-index: 2;
+    width: 35%;
+    margin-right: 43px;
+    display: flex;
+    flex-direction: column;
+}
+
+.scarab-text .display { margin-bottom: 53px; }
+
+.scarab-text img {
+    align-self: center;
+    width: 260px;
+    height: auto;
+    margin: 125px 0 90px;
+}
+
+.scarab-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 50%;
+    height: min(100vh, 900px);
+    object-fit: cover;
+    object-position: right center;
+}
+
+.scarab-bottom {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    width: 46%;
+    height: 935px;
+    object-fit: cover;
+    object-position: left center;
+}
+
+
+/* ---------- Exhibition highlights ---------- */
+
+.highlights {
+    position: relative;
+    isolation: isolate;
+    padding: 200px 48px 137px;
+}
+
+.highlights-wall {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right top;
+    pointer-events: none;
+}
+
+.highlights-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+}
+
+.highlights-intro .caps-text {
+    max-width: 415px;
+    font-size: 12px;
+    letter-spacing: 2.16px;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    gap: 19px;
+    margin-top: 24px;
+}
+
+/* staggered like the design */
+.highlight:nth-child(2) { margin-top: 64px; }
+.highlight:nth-child(4) { margin-top: 50px; }
+
+.highlight-img {
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+}
+
+.highlight-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(0.9);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s;
+}
+
+.highlight:hover .highlight-img {
+    border-color: rgba(220, 185, 70, 0.9);
+    box-shadow: 0 15px 35px -5px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.25);
+    transform: translateY(-4px);
+}
+
+.highlight:hover img { transform: scale(1.06); filter: brightness(1.05); }
+
+.highlight h3 {
+    margin: 22px 0 10px;
+    color: var(--gold);
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 3.6px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.highlight:hover h3 { color: #e6ca65; }
+
+.highlight p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.43;
+}
+
+
+/* ---------- AR: The Pharaoh in Your Room ---------- */
+
+.ar,
+.echoes {
+    position: relative;
+    background: url("../assets/images/hieroglyph-wall.webp") left top / 100% auto no-repeat;
+}
+
+.ar-text {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ar-text .display { font-size: 72px; }
+.ar-text .caps-text { margin-top: 30px; }
+.ar-qr { width: 200px; height: auto; margin-top: 36px; }
+.ar-btn { display: none; margin-top: 30px; }
+
+.ar-model {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.ar-model model-viewer {
+    width: min(600px, 100%);
+    height: 840px;
+}
+
+
+/* ---------- Echoes of Eternity ---------- */
+
+.echoes {
+    padding-top: 20px;
+    background-position: right top;
+    overflow-x: clip;
+}
+
+.echoes-text {
+    position: relative;
+    z-index: 2;
+    width: 440px;
+    margin-left: 61.5%;
+}
+
+.echoes-text .display { margin-bottom: 26px; font-size: 72px; }
+.echoes-text .caps-text { font-size: 12px; letter-spacing: 2.16px; }
+.echoes-text .caps-text + .caps-text { margin-top: 17px; }
+
+/* The gif's ring sits at 25–92% of its width; sizes below line the ring up with the design. */
+.echoes-mask {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 91%;
+    max-width: none;
+    height: auto;
+    margin: 0 0 -24px -11%;
+}
+
+
+/* ========== Tablet ========== */
+
+@media (max-width: 1199px) {
+    .label-long { display: none; }
+    .label-short { display: inline; }
+
+    .hero { height: min(141vw, 1050px); }
+    .hero::before { top: 18%; left: 20%; }
+    .hero-pharaoh { left: 12%; right: auto; }
+    .hero-text { top: 200px; left: 40px; max-width: 340px; }
+    .hero-lead { margin: 22px 0 16px; font-size: 16px; }
+    .hero-lead br { display: none; }
+
+    .chronicle { min-height: 0; padding: 225px 0 165px; }
+    .chronicle-relic { top: 20%; }
+    .chronicle-text { width: min(460px, 100% - 80px); }
+    .chronicle-text .display { margin-bottom: 16px; font-size: 42px; }
+    .chronicle-text .caps-text { font-size: 12px; letter-spacing: 2.16px; }
+
+    .golden { flex-direction: column; gap: 20px; padding: 0 42px 35px; }
+    .golden .caps-text { max-width: 490px; margin: 0; font-size: 12px; letter-spacing: 2.16px; }
+
+    .trailer video { aspect-ratio: 744 / 701; }
+
+    .scarab { padding: 59px 0 700px; }
+    .scarab-text { width: 37%; margin-right: 57px; }
+    .scarab-text .display { margin-bottom: 55px; }
+    .scarab-text .caps-text { font-size: 14px; letter-spacing: 2.6px; }
+    .scarab-text img { width: 220px; margin: 15px 0 25px; }
+    .scarab-sticky { top: 120px; width: 48%; height: 640px; }
+    .scarab-bottom { bottom: 35px; width: 48%; height: 615px; }
+
+    .highlights { padding: 74px 75px 125px; }
+    .highlights-intro { flex-direction: column; align-items: flex-start; gap: 25px; }
+    .highlights-intro .caps-text { max-width: 400px; font-size: 14px; letter-spacing: 2.88px; }
+
+    .highlights-grid {
+        grid-template-columns: repeat(2, minmax(0, 286px));
+        justify-content: center;
+        gap: 40px 19px;
+        margin-top: 46px;
+    }
+
+    /* tablet order: Ramses, Relic / Hatshepsut, Seated */
+    .highlight:nth-child(2) { margin-top: 70px; }
+    .highlight:nth-child(3) { order: 4; margin-top: -60px; }
+    .highlight:nth-child(4) { order: 3; margin-top: 0; }
+
+    .highlight h3 {
+        margin: 18px 0 10px;
+        color: #fff;
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+    }
+
+    .highlight p { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    .ar-text .caps-text { margin-top: 26px; font-size: 12px; letter-spacing: 2.16px; }
+    .ar-qr { display: none; }
+    .ar-btn { display: inline-flex; }
+    .ar-model model-viewer { height: 620px; }
+
+    .echoes { padding-top: 150px; }
+    .echoes-text { width: auto; margin: 0 37px 0 40%; }
+    .echoes-text .display { font-size: 64px; }
+    .echoes-text .caps-text { font-size: 13px; letter-spacing: 2.6px; }
+    .echoes-mask { width: 1116px; margin: 20px 0 -25px -365px; }
+}
+
+
+/* ========== Mobile ========== */
+
+@media (max-width: 639px) {
+    .hero { height: max(155vw, 520px); }
+    .hero::before { width: 600px; }
+    .hero-pharaoh { left: 30%; }
+    .hero-text { top: 170px; left: 20px; max-width: 46%; }
+    .hero-text .display { font-size: clamp(42px, 13vw, 56px); }
+    .hero-lead { margin: 16px 0 14px; font-size: 15px; }
+    .hero-text .btn-lg { padding: 10px 14px; font-size: 11px; }
+
+    /* the design keeps this text in a narrow left column */
+    .chronicle { justify-content: flex-start; padding: 45px 0 60px; }
+    .chronicle-relic { display: none; }
+    .chronicle-text { width: auto; max-width: 230px; padding: 0 20px; text-align: left; }
+    .chronicle-text .display { font-size: 42px; }
+    .chronicle-text .caps-text { font-size: 11px; letter-spacing: 1.8px; }
+
+    .golden { gap: 22px; padding: 0 20px 30px; }
+    .golden .caps-text { font-size: 11px; letter-spacing: 1.8px; }
+
+    .trailer video { aspect-ratio: 402 / 384; }
+
+    .scarab { padding: 66px 0 400px; }
+    .scarab-text { width: 47%; margin-right: 18px; }
+    .scarab-text .display { margin-bottom: 15px; }
+    .scarab-text .caps-text { font-size: 11px; letter-spacing: 1.8px; }
+    .scarab-text img { width: 180px; margin: 50px 0 25px; }
+    .scarab-sticky { top: 140px; width: 46%; height: 330px; }
+    .scarab-bottom { bottom: 55px; width: 46%; height: 305px; }
+
+    .highlights { padding: 84px 20px 60px; }
+    .highlights-intro { gap: 22px; }
+    .highlights-intro .caps-text { font-size: 11px; letter-spacing: 1.8px; }
+    .highlights-grid { grid-template-columns: minmax(0, 287px); gap: 25px; margin-top: 32px; }
+    .highlight:nth-child(n) { margin-top: 0; }
+
+    .ar { padding-top: 40px; }
+    .ar-text .display { font-size: 40px; }
+    .ar-text .caps-text { margin-top: 22px; font-size: 10px; }
+    .ar-model model-viewer { height: 560px; }
+
+    .echoes { padding-top: 160px; }
+    .echoes-text { margin: 0 14px 0 50%; }
+    .echoes-text .display { margin-bottom: 20px; font-size: 38px; }
+    .echoes-text .caps-text { font-size: 13px; letter-spacing: 2.9px; line-height: 1.55; }
+    .echoes-mask { width: 108%; margin: 5px 0 -60px -23%; }
+}
