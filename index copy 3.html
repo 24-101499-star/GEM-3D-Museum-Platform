@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="s.css"> 
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js"></script>
+
+<script src="js.js"></script>
+    <title>GEM-3D-Museum-Platform</title>
+</head>
+<body>
+<header>
+    <img src="img/Frame 2.svg" alt="GEM Logo" class="logo">
+
+    <nav class="nav-links">
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#Collections">Collections</a></li>
+            <li><a href="#Visit">Visit</a></li>
+            <li><a href="#Research">Research</a></li>
+            <li><a href="#About">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-actions">
+        <button class="search-btn">
+            <img src="img/btn-search.svg" alt="Search Icon">
+        </button>
+        <button class="book-btn">Book tickets</button>
+    </div>
+
+    <!-- زرار واحد بس -->
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"></button>
+
+    <nav class="mobile-menu" id="mobile-menu">
+        <a href="#home" class="active">Home</a>
+        <a href="#Collections">Collections</a>
+        <a href="#Visit">Visit</a>
+        <a href="#Research">Research</a>
+        <a href="#About">About</a>
+        <button class="book-btn">Book tickets</button>
+    </nav>
+</header>
+ 
+<section class="s-22">
+
+  <div class="imm">
+    <img src="img/Group 9.svg" alt="">
+    <div class="overlay-text"> 
+        <h2>ROYAL STATUARY</h2>
+        <h3>THE SEATED  <br>PHARAOH
+ </h3>
+ <p>Dynasty XVIII, ca. 1336–1327  <br>BC. Discovered in the Valley<br>of the Kings. A magnificent<br>depiction of the young king<br> enthroned, showcasing  <br> exquisite divine proportions<br>and royal regalia. <br> Material: Carved and painted <br>limestone.</p>
+    </div>
+</div>
+
+<div class="hd">
+   <p class="pp">Statue of King Khasekhem</p>
+  <model-viewer 
+      src="statue_of_king_khasekhem.glb" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      tone-mapping="neutral" 
+     
+      shadow-intensity="1" 
+      auto-rotate
+      rotation-per-second="25deg"
+      min-camera-orbit="-180deg 0deg 11.1m" 
+      max-camera-orbit="180deg 74deg auto" 
+      min-field-of-view="30deg">
+    
+      </div>
+
+    
+       
+    </model-viewer>
+</div>
+    <img class="immm"
+    src="Background_imgupscaler.ai_Beta_2K.jpg" alt="">
+
+</section>
+
+</body>
+</html>

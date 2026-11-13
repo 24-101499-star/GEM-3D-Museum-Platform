@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="s.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js"></script>
+    <script src="js.js" defer></script>
+    <script src="artifact.js" defer></script>
+    <title>Artifact | GEM</title>
+</head>
+<body class="artifact-page">
+<header>
+    <a href="index.html" class="logo-link"><img src="img/Frame 2.svg" alt="GEM – Grand Egyptian Museum" class="logo"></a>
+
+    <nav class="nav-links" aria-label="Main">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collections.html" class="active">Collections</a></li>
+            <li><a href="index.html#Visit">Visit</a></li>
+            <li><a href="index.html#Research">Research</a></li>
+            <li><a href="index.html#About">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-actions">
+        <button class="search-btn" type="button" aria-label="Search"><img src="img/btn-search.svg" alt=""></button>
+        <a href="index.html#Tickets" class="book-btn">Book tickets</a>
+    </div>
+
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <img src="img/iconoir_menu-scale.svg" alt="">
+    </button>
+
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+        <a href="index.html">Home</a>
+        <a href="collections.html" class="active">Collections</a>
+        <a href="index.html#Visit">Visit</a>
+        <a href="index.html#Research">Research</a>
+        <a href="index.html#About">About</a>
+        <a href="index.html#Tickets" class="book-btn">Book tickets</a>
+    </nav>
+</header>
+<div class="menu-backdrop" hidden></div>
+
+<main class="stage">
+    <div class="info-card">
+        <div class="info-panel">
+            <h2 class="info-eyebrow">Historical Context</h2>
+            <h1 class="info-heading">The Lotus Bust<br>of the Young King</h1>
+            <blockquote class="info-text"></blockquote>
+            <button class="book-btn ar-btn" type="button" data-target=".stage model-viewer">AR EXPERIENCE</button>
+        </div>
+    </div>
+
+    <model-viewer
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        touch-action="pan-y"
+        tone-mapping="neutral"
+        shadow-intensity="1"
+        auto-rotate
+        rotation-per-second="25deg"
+        interaction-prompt="none">
+    </model-viewer>
+
+    <p class="plate"></p>
+</main>
+</body>
+</html>

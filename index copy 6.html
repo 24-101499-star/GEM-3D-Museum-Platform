@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient Egyptian Temple - Statues Info</title>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+
+    <style>
+        body { margin: 0; overflow: hidden; }
+
+        #loading {
+            position: fixed; inset: 0; background: #101018; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-family: Arial, sans-serif; z-index: 10;
+        }
+
+
+
+        #info-slot {
+            position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+            z-index: 6; pointer-events: none; opacity: 0; transition: opacity .35s;
+            font-size: clamp(11px, 1.15vw, 16px);
+        }
+        #info-slot.on { opacity: 1; }
+        #hint {
+            position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 10px);
+            z-index: 6; pointer-events: none; opacity: 0; transition: opacity .3s, transform .3s;
+            padding: .5em 1.2em; border-radius: 2em; border: 2px solid #e8c35a;
+            background: linear-gradient(180deg, #14407a, #0a2347); color: #ffe9a8;
+            font: 600 15px "Segoe UI", Tahoma, Arial, sans-serif; direction: rtl;
+            box-shadow: 0 .4em 1.2em rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(241, 210, 122, .35);
+        }
+        #hint.on { opacity: 1; transform: translate(-50%, 0); }
+        #hint kbd {
+            display: inline-block; min-width: 1.4em; padding: .05em .5em; margin: 0 .3em;
+            border-radius: .4em; background: #e8c35a; color: #0a2347; font-weight: 800; text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">Loading your temple...</div>
+    <div id="info-slot"></div>
+
+
+    <a-scene
+        auto-quality="target: 58; minRatio: 0.5; maxRatio: 1.25"
+        info-hotspots
+        renderer="antialias: false; powerPreference: high-performance; precision: medium; alpha: false"
+        gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+        webxr="referenceSpaceType: local-floor"
+        vr-mode-ui="enabled: true">
+
+        <a-entity
+            id="room"
+            gltf-model="url(Untitled.glb)"
+            static-model
+            position="0 0 0"
+            rotation="0 0 0"
+            scale="1 1 1">
+        </a-entity>
+
+        <a-entity id="rig" position="0 2 6" free-fly="speed: 8; boost: 4; smoothing: 12">
+
+            <a-camera
+                near="0.1"
+                far="3000"
+                look-controls="pointerLockEnabled: true; magicWindowTrackingEnabled: false"
+                wasd-controls="enabled: false">
+
+                <a-entity raycaster="objects: .hotspot; far: 40; interval: 100"></a-entity>
+                <a-entity position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.007; radiusOuter: 0.011"
+                    material="color: white; shader: flat; opacity: 0.7; transparent: true"></a-entity>
+            </a-camera>
+
+            <a-entity id="hand-l" laser-controls="hand: left"  raycaster="objects: .hotspot; far: 40; interval: 50"></a-entity>
+            <a-entity id="hand-r" laser-controls="hand: right" raycaster="objects: .hotspot; far: 40; interval: 50"></a-entity>
+        </a-entity>
+
+        <a-light type="ambient" color="#FFF8E7" intensity="0.9"></a-light>
+        <a-light type="directional" color="#FFD700" intensity="1.1" position="-5 10 5"></a-light>
+
+    </a-scene>
+
+    <script>
+       
+        const EDIT_MODE = new URLSearchParams(location.search).has('edit');
+
+        const STATUE_INFO = [
+            {
+                id: 's1', hint: 'الممر الأول — الفاترينة اليسرى (التمثال الرمادي الجالس)',
+                name: 'تمثال ملكي جالس', en: 'Seated Royal Statue',
+                era: 'مصر القديمة', material: 'حجر صلب مصقول',
+                desc: 'ملك جالس على عرشه بثبات، يضع يديه على ركبتيه ويرتدي غطاء الرأس الملكي. هذه الوضعية الهادئة المتماثلة كانت تعبّر عن هيبة الحاكم واستقرار البلاد، وهي من أشهر أوضاع التماثيل الملكية في مصر القديمة.',
+                fact: 'كان المصري القديم يعتقد أن التمثال يصلح مسكناً لروح صاحبه «الكا»، ولذلك كانت التماثيل تُنحت بعناية لتبقى للأبد.'
+            },
+            {
+                id: 's2', hint: 'الممر الأول — الفاترينة اليمنى (التمثال النصفي البرتقالي)',
+                name: 'تمثال نصفي ملوّن', en: 'Painted Bust',
+                era: 'مصر القديمة', material: 'حجر أو جبس ملوّن',
+                desc: 'رأس وكتفان بألوان دافئة تحاكي الطلاء الأصلي الذي كانت تُكسى به التماثيل. التماثيل النصفية كانت تُصنع أحياناً كنماذج في ورش النحت لضبط ملامح الوجه قبل تنفيذ التمثال الكبير.',
+                fact: 'كانت الألوان في الفن المصري رمزية: فاللون الأحمر المائل للبني غالباً لبشرة الرجال، والأصفر لبشرة النساء.'
+            },
+            {
+                id: 's3', hint: 'القاعة الزرقاء — الفاترينة اليسرى (التمثال الجالس الرملي)',
+                name: 'تمثال جالس من الحجر الرملي', en: 'Seated Sandstone Figure',
+                era: 'مصر القديمة', material: 'الحجر الرملي',
+                desc: 'شخصية جالسة بوضع هادئ وحجم أصغر من تماثيل الملوك، وهو النمط المعروف لتماثيل الموظفين والكتبة. الحجر الرملي من أكثر الأحجار استخداماً في المعابد المصرية، لأنه أسهل في النحت من الجرانيت.',
+                fact: 'كان الكاتب من أرقى الوظائف، لأن القراءة والكتابة كانت مهارة نادرة في مصر القديمة.'
+            },
+            {
+                id: 's4', hint: 'القاعة الزرقاء — الفاترينة الوسطى (الإكليل الذهبي)',
+                name: 'إكليل ذهبي', en: 'Golden Wreath',
+                era: 'مصر القديمة', material: 'الذهب',
+                desc: 'قطعة زينة فاخرة من الذهب على هيئة إكليل أو قلادة، كانت تُعرض ضمن مقتنيات الملوك والنبلاء. المصريون القدماء أتقنوا صياغة الذهب وطرقه وتشكيله في أدق التفاصيل.',
+                fact: 'سمّى المصريون الذهب «لحم الآلهة» لأنه لا يصدأ ولا يفقد بريقه، فصار رمزاً للخلود.'
+            },
+            {
+                id: 's5', hint: 'القاعة الزرقاء — الفاترينة اليمنى (الرأس الحجري الفاتح)',
+                name: 'رأس ملكي من الحجر', en: 'Royal Stone Head',
+                era: 'مصر القديمة', material: 'حجر فاتح اللون',
+                desc: 'رأس منحوت بملامح هادئة ومثالية. الفنان المصري كان يصوّر الملك غالباً بوجه مثالي ثابت يعبّر عن القوة والخلود، لا بملامحه الحقيقية بالضرورة.',
+                fact: 'بعض التماثيل كانت تُرصّع عيونها بالكوارتز والكريستال، فتبدو الوجوه وكأنها تنظر إليك فعلاً.'
+            }
+        ];
+
+  
+        const STATUE_POS = {
+          
+        };
+
+        const HOTSPOTS = STATUE_INFO
+            .filter((i) => STATUE_POS[i.id])
+            .map((i) => Object.assign({ radius: 3.5, lift: 1.0 }, i, { pos: STATUE_POS[i.id] }));
+
+      
+        const CARD_CSS = `
+        @keyframes icDrop{from{opacity:0;transform:translateY(-1.2em) scale(.92)}}
+        @keyframes icUnroll{from{grid-template-rows:0fr}}
+        @keyframes icRise{from{opacity:0;transform:translateY(.8em)}}
+        @keyframes icWings{from{transform:scaleX(.12);opacity:0}}
+        @keyframes icShine{0%{background-position:200% 0}100%{background-position:-200% 0}}
+        @keyframes icGlow{0%,100%{filter:drop-shadow(0 0 .05em #c9972b)}50%{filter:drop-shadow(0 0 .35em #ffd76a)}}
+        @keyframes icDust{0%{transform:translateY(0);opacity:0}15%{opacity:.95}100%{transform:translateY(-4em);opacity:0}}
+
+        .ic{position:relative;width:26em;box-sizing:border-box;display:flex;flex-direction:column;
+            font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;color:#3a2412;
+            text-align:right;line-height:1.75;animation:icDrop .5s cubic-bezier(.2,.8,.2,1) both}
+
+        /* عصاتين البردية (فوق وتحت) */
+        .ic .rod{position:relative;z-index:2;height:1.1em;border-radius:.6em;
+            background:linear-gradient(180deg,#6b3f14 0%,#c9972b 20%,#fff0b0 38%,#d8a93a 60%,#6b3f14 100%);
+            box-shadow:0 .25em .6em rgba(0,0,0,.45)}
+        .ic .rod::before,.ic .rod::after{content:"";position:absolute;top:-.12em;bottom:-.12em;width:.8em;border-radius:50%;
+            background:radial-gradient(circle at 35% 35%,#fff0b0,#c9972b 55%,#6b3f14)}
+        .ic .rod::before{right:-.1em}
+        .ic .rod::after{left:-.1em}
+
+        /* البردية بتتفرد من فوق لتحت */
+        .ic .unroll{display:grid;grid-template-rows:1fr;margin:0 .6em;
+            box-shadow:0 .5em 1.6em rgba(0,0,0,.4);animation:icUnroll 1s .1s cubic-bezier(.3,.8,.2,1) both}
+        .ic .inner{min-height:0;overflow:hidden;position:relative;padding:1.1em 1.4em .9em;
+            background:
+              repeating-linear-gradient(0deg,rgba(120,80,30,.05) 0 .12em,transparent .12em .45em),
+              repeating-linear-gradient(90deg,rgba(120,80,30,.045) 0 .1em,transparent .1em .6em),
+              radial-gradient(ellipse at 20% 8%,rgba(255,250,220,.75),transparent 55%),
+              radial-gradient(ellipse at 88% 96%,rgba(150,100,40,.3),transparent 55%),
+              linear-gradient(180deg,#f5e6b6,#e9d198 60%,#dcbf80);
+            box-shadow:inset 0 0 0 .14em #b8892b,inset 0 0 0 .3em #f5e6b6,inset 0 0 0 .44em #1d5fa8,inset 0 0 1.6em rgba(110,70,20,.35)}
+        /* غبار ذهبي بيطلع */
+        .ic .inner::after{content:"";position:absolute;left:8%;bottom:1em;width:.2em;height:.2em;border-radius:50%;
+            background:#fff3b0;pointer-events:none;
+            box-shadow:4em -.5em #ffe58a,9em .3em #fff3b0,14em -.8em #ffd76a,19em .2em #fff3b0;
+            animation:icDust 4.5s ease-in infinite}
+
+        /* قرص الشمس المجنح */
+        .ic .sun{display:block;width:12.5em;height:auto;margin:.3em auto .1em;transform-origin:center;
+            animation:icWings .9s .35s cubic-bezier(.2,.9,.3,1) both}
+
+        /* خرطوش الاسم */
+        .ic .cart{position:relative;display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;
+            box-sizing:border-box;margin:.2em auto .1em;padding:.2em 1.7em .2em 1.2em;border-radius:2.2em;
+            border:.14em solid #b8892b;background:linear-gradient(180deg,#14407a,#0a2347);
+            box-shadow:inset 0 0 0 .1em #f1d27a,0 .15em .5em rgba(0,0,0,.35);animation:icRise .6s .55s both}
+        .ic .cart::after{content:"";position:absolute;left:.6em;top:.25em;bottom:.25em;width:.14em;border-radius:.1em;background:#f1d27a}
+        .ic h2{margin:0;font-size:1.55em;font-weight:800;line-height:1.5;
+            background:linear-gradient(100deg,#b8892b 20%,#fff2b8 40%,#e8c35a 50%,#fff2b8 60%,#b8892b 80%);
+            background-size:200% 100%;-webkit-background-clip:text;background-clip:text;
+            color:transparent;-webkit-text-fill-color:transparent;animation:icShine 4s linear infinite}
+
+        .ic .en{text-align:center;letter-spacing:.28em;text-transform:uppercase;font-size:.76em;color:#14407a;
+            margin:.15em 0 .1em;animation:icRise .6s .65s both}
+
+        /* عين حورس + عنخ */
+        .ic .glyphs{display:block;width:9.5em;height:auto;margin:.25em auto .5em;animation:icRise .6s .7s both}
+        .ic .glyphs .eye{animation:icGlow 2.6s ease-in-out infinite}
+
+        .ic .chips{display:flex;flex-wrap:wrap;gap:.45em;justify-content:center;margin:.2em 0 .8em}
+        .ic .chip{font-size:.82em;padding:.08em .85em;border-radius:2em;background:rgba(20,64,122,.1);
+            border:.07em solid #1d5fa8;color:#14407a;animation:icRise .5s .8s both}
+        .ic .chip:nth-child(2){animation-delay:.9s}
+        .ic .chip:nth-child(3){animation-delay:1s}
+        .ic .chip i{font-style:normal;color:#9b2f1f;margin-inline-end:.5em;font-weight:700}
+
+        .ic .desc{margin:.2em 0 .8em;animation:icRise .6s .95s both}
+
+        .ic .fact{font-size:.92em;padding:.55em .9em;border-radius:.6em;border-inline-start:.28em solid #c8452d;
+            background:linear-gradient(90deg,rgba(200,69,45,.05),rgba(200,69,45,.15));animation:icRise .6s 1.1s both}
+        .ic .fact b{display:block;color:#9b2f1f}
+
+        .ic .band{height:.55em;margin-top:.9em;border-radius:.1em;box-shadow:0 0 0 .1em #b8892b;
+            background:repeating-linear-gradient(90deg,#c8452d 0 .9em,#f4ecd8 .9em 1.8em,#1d5fa8 1.8em 2.7em,#f4ecd8 2.7em 3.6em)}
+
+        .ic.static,.ic.static *,.ic.static .inner::after{animation:none!important}
+        `;
+
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        const SUN_SVG = '<svg class="sun" viewBox="0 0 220 56" xmlns="http://www.w3.org/2000/svg">' +
+            '<g stroke="#7a4a1a" stroke-width="1.2" stroke-linejoin="round">' +
+            '<g id="wingL"><path d="M96 28C70 14 36 12 6 20C30 24 60 26 96 34Z" fill="#1d5fa8"/>' +
+            '<path d="M96 34C66 28 34 30 12 38C40 38 68 38 96 40Z" fill="#e8c35a"/>' +
+            '<path d="M96 40C70 38 46 42 26 50C52 48 76 46 96 44Z" fill="#c8452d"/></g>' +
+            '<g transform="translate(220 0) scale(-1 1)"><path d="M96 28C70 14 36 12 6 20C30 24 60 26 96 34Z" fill="#1d5fa8"/>' +
+            '<path d="M96 34C66 28 34 30 12 38C40 38 68 38 96 40Z" fill="#e8c35a"/>' +
+            '<path d="M96 40C70 38 46 42 26 50C52 48 76 46 96 44Z" fill="#c8452d"/></g>' +
+            '<circle cx="110" cy="28" r="13" fill="#c8452d" stroke="#f1d27a" stroke-width="3"/>' +
+            '<circle cx="110" cy="28" r="6" fill="#ffd76a" stroke="none"/></g></svg>';
+
+        const GLYPHS_SVG = '<svg class="glyphs" viewBox="0 0 220 32" xmlns="http://www.w3.org/2000/svg">' +
+            '<g stroke="#8a5a1a" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M42 16H88M132 16H178" stroke="#b8892b" stroke-width="1.5"/>' +
+            '<g transform="translate(20 17)"><ellipse cx="0" cy="-7" rx="4.2" ry="5.5"/><path d="M0 -1.5V12M-6 4H6"/></g>' +
+            '<g transform="translate(200 17)"><ellipse cx="0" cy="-7" rx="4.2" ry="5.5"/><path d="M0 -1.5V12M-6 4H6"/></g>' +
+            '<g class="eye" transform="translate(110 15)"><path d="M-19 0Q0 -13 19 0Q0 11 -19 0Z" fill="#fff6d8"/>' +
+            '<circle cx="1" cy="0" r="4.4" fill="#14407a" stroke="none"/><path d="M-21 -6Q0 -21 21 -6"/>' +
+            '<path d="M-7 7Q-9 14 -15 14M8 8V15"/></g></g></svg>';
+
+        function cardHTML(h, cls) {
+            const chips = [['العصر', h.era], ['الخامة', h.material], ['المكان', h.place]]
+                .filter((c) => c[1])
+                .map((c) => '<span class="chip"><i>' + esc(c[0]) + '</i>' + esc(c[1]) + '</span>').join('');
+            return '<div class="ic ' + (cls || '') + '" dir="rtl" lang="ar">' +
+                '<div class="rod"></div>' +
+                '<div class="unroll"><div class="inner">' +
+                SUN_SVG +
+                '<div class="cart"><h2>' + esc(h.name) + '</h2></div>' +
+                (h.en ? '<div class="en" dir="ltr">' + esc(h.en) + '</div>' : '') +
+                GLYPHS_SVG +
+                (chips ? '<div class="chips">' + chips + '</div>' : '') +
+                (h.desc ? '<div class="desc">' + esc(h.desc) + '</div>' : '') +
+                (h.fact ? '<div class="fact"><b>☥ هل تعلم؟</b>' + esc(h.fact) + '</div>' : '') +
+                '<div class="band"></div>' +
+                '</div></div>' +
+                '<div class="rod"></div></div>';
+        }
+
+
+        AFRAME.registerComponent('free-fly', {
+            schema: {
+                speed:     { type: 'number', default: 8 },
+                boost:     { type: 'number', default: 4 },
+                smoothing: { type: 'number', default: 12 }
+            },
+
+            init: function () {
+                this.keys = {};
+                this.stick = { lx: 0, ly: 0, ry: 0 };
+                this.velocity = new THREE.Vector3();
+                this.target = new THREE.Vector3();
+                this.forward = new THREE.Vector3();
+                this.right = new THREE.Vector3();
+                this.up = new THREE.Vector3(0, 1, 0);
+                this.camQuat = new THREE.Quaternion();
+                this.hud = document.querySelector('#speed-hud');
+
+                this.onKeyDown = (e) => {
+                    if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+                    this.keys[e.code] = true;
+                    if (e.code === 'Space' || e.code.startsWith('Arrow')) e.preventDefault();
+                };
+                this.onKeyUp = (e) => { this.keys[e.code] = false; };
+                this.onBlur = () => { this.keys = {}; };
+                this.onWheel = (e) => {
+                    const s = this.data.speed * (e.deltaY < 0 ? 1.15 : 1 / 1.15);
+                    this.data.speed = Math.min(500, Math.max(0.5, s));
+                    if (this.hud) this.hud.textContent = 'Speed: ' + this.data.speed.toFixed(1);
+                };
+
+                window.addEventListener('keydown', this.onKeyDown);
+                window.addEventListener('keyup', this.onKeyUp);
+                window.addEventListener('blur', this.onBlur);
+                window.addEventListener('wheel', this.onWheel, { passive: true });
+
+                const bind = () => {
+                    const l = document.querySelector('#hand-l');
+                    const r = document.querySelector('#hand-r');
+                    if (l) l.addEventListener('thumbstickmoved', (e) => { this.stick.lx = e.detail.x; this.stick.ly = e.detail.y; });
+                    if (r) r.addEventListener('thumbstickmoved', (e) => { this.stick.ry = e.detail.y; });
+                };
+                const sc = this.el.sceneEl;
+                if (sc.hasLoaded) bind(); else sc.addEventListener('loaded', bind);
+            },
+
+            remove: function () {
+                window.removeEventListener('keydown', this.onKeyDown);
+                window.removeEventListener('keyup', this.onKeyUp);
+                window.removeEventListener('blur', this.onBlur);
+                window.removeEventListener('wheel', this.onWheel);
+            },
+
+            tick: function (time, dt) {
+                if (!dt) return;
+                dt = Math.min(dt, 100) / 1000;
+
+                const k = this.keys;
+                const cam = this.el.sceneEl.camera;
+                if (!cam) return;
+
+                const dz = 0.15, s = this.stick;
+                const lx = Math.abs(s.lx) > dz ? s.lx : 0;
+                const ly = Math.abs(s.ly) > dz ? s.ly : 0;
+                const ry = Math.abs(s.ry) > dz ? s.ry : 0;
+
+                const moving = k.KeyW || k.KeyS || k.KeyA || k.KeyD || k.ArrowUp || k.ArrowDown ||
+                               k.ArrowLeft || k.ArrowRight || k.Space || k.KeyE || k.KeyQ ||
+                               k.ControlLeft || k.ControlRight || lx || ly || ry;
+
+                if (!moving && this.velocity.lengthSq() < 1e-6) return;
+
+                cam.getWorldQuaternion(this.camQuat);
+                this.forward.set(0, 0, -1).applyQuaternion(this.camQuat);
+                this.right.set(1, 0, 0).applyQuaternion(this.camQuat);
+
+                this.target.set(0, 0, 0);
+                if (k.KeyW || k.ArrowUp)    this.target.add(this.forward);
+                if (k.KeyS || k.ArrowDown)  this.target.sub(this.forward);
+                if (k.KeyD || k.ArrowRight) this.target.add(this.right);
+                if (k.KeyA || k.ArrowLeft)  this.target.sub(this.right);
+                if (k.Space || k.KeyE)      this.target.add(this.up);
+                if (k.ControlLeft || k.ControlRight || k.KeyQ) this.target.sub(this.up);
+
+                if (lx || ly || ry) {
+                    this.target.addScaledVector(this.forward, -ly);
+                    this.target.addScaledVector(this.right, lx);
+                    this.target.addScaledVector(this.up, -ry);
+                }
+
+                if (this.target.lengthSq() > 1) this.target.normalize();
+
+                let speed = this.data.speed;
+                if (k.ShiftLeft || k.ShiftRight) speed *= this.data.boost;
+                this.target.multiplyScalar(speed);
+
+                this.velocity.lerp(this.target, 1 - Math.exp(-this.data.smoothing * dt));
+                this.el.object3D.position.addScaledVector(this.velocity, dt);
+            }
+        });
+
+        AFRAME.registerComponent('info-hotspots', {
+            init: function () {
+                const st = document.createElement('style');
+                st.textContent = CARD_CSS;
+                document.head.appendChild(st);
+
+                this.slot = document.querySelector('#info-slot');
+                this.current = null;
+                this.captured = [];
+                this.items = [];
+                this.camPos = new THREE.Vector3();
+                this.camDir = new THREE.Vector3();
+                this.tmp = new THREE.Vector3();
+                this.handPos = new THREE.Vector3();
+                this.hands = [];
+
+                HOTSPOTS.forEach((h) => this.build(h));
+
+         
+                this.hint = document.createElement('div');
+                this.hint.id = 'hint';
+                document.body.appendChild(this.hint);
+                this.hintItem = null;
+
+              
+                this.onPressKey = (e) => { if (e.code === 'KeyF' && !e.repeat) this.press(null); };
+                this.onPressMouse = (e) => { if (e.button === 0 && document.pointerLockElement) this.press(null); };
+                window.addEventListener('keydown', this.onPressKey);
+                window.addEventListener('mousedown', this.onPressMouse);
+
+            
+                const bindHands = () => {
+                    ['#hand-l', '#hand-r'].forEach((sel) => {
+                        const el = document.querySelector(sel);
+                        if (!el) return;
+                        ['triggerdown', 'abuttondown', 'xbuttondown'].forEach((ev) => el.addEventListener(ev, () => this.press(el)));
+                    });
+                };
+                if (this.el.hasLoaded) bindHands(); else this.el.addEventListener('loaded', bindHands);
+
+                if (EDIT_MODE) {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;' +
+                        'background:rgba(0,0,0,.82);color:#ffd700;font:15px Arial,sans-serif;padding:10px 18px;' +
+                        'border-radius:8px;pointer-events:none;text-align:center;direction:rtl;line-height:1.7';
+                    document.body.appendChild(toast);
+
+                    this.queue = STATUE_INFO.filter((i) => !STATUE_POS[i.id]);
+                    this.placed = [];
+
+                    const copyBlock = () => {
+                        const block = this.placed.map((p) => p.info.id + ": '" + p.pos + "',").join('\n');
+                        console.log(block);
+                        if (navigator.clipboard) navigator.clipboard.writeText(block).catch(() => {});
+                    };
+                    const refresh = (msg) => {
+                        const next = this.queue[this.placed.length];
+                        toast.innerHTML = (msg ? msg + '<br>' : '') + (next
+                            ? 'وضع التعديل: بصّي على <b>' + next.hint + '</b> واضغطي <b>P</b> (' + (this.placed.length + 1) + '/' + this.queue.length + ')<br><small>Backspace للتراجع</small>'
+                            : 'خلصتي كل التماثيل ✔ — الصقي المنسوخ داخل STATUE_POS');
+                    };
+                    refresh('');
+
+                    this.onKey = (e) => {
+                        if (e.code === 'Backspace') {
+                            const last = this.placed.pop();
+                            if (!last) return;
+                            this.removeItem(last.item);
+                            copyBlock();
+                            refresh('اتمسحت آخر نقطة');
+                            return;
+                        }
+                        if (e.code !== 'KeyP') return;
+
+                        const next = this.queue[this.placed.length];
+                        if (!next) { refresh(); return; }
+
+                        const sc = this.el, cam = sc.camera, room = document.querySelector('#room');
+                        if (!cam || !room) return;
+                        const o = new THREE.Vector3(), d = new THREE.Vector3();
+                        cam.getWorldPosition(o);
+                        cam.getWorldDirection(d);
+                        const hit = new THREE.Raycaster(o, d).intersectObject(room.object3D, true)[0];
+                        const p = hit ? hit.point : o.clone().addScaledVector(d, 3);
+                        const pos = p.x.toFixed(2) + ' ' + p.y.toFixed(2) + ' ' + p.z.toFixed(2);
+
+                        const item = this.build(Object.assign({ radius: 3.5, lift: 1.0 }, next, { pos: pos }));
+                        this.placed.push({ info: next, pos: pos, item: item });
+                        copyBlock();
+                        refresh('اتحفظ: ' + next.name + ' (جرّبي تقربي منه وتشوفي الكارت)');
+                    };
+                    window.addEventListener('keydown', this.onKey);
+                }
+            },
+
+            remove: function () {
+                if (this.onKey) window.removeEventListener('keydown', this.onKey);
+                window.removeEventListener('keydown', this.onPressKey);
+                window.removeEventListener('mousedown', this.onPressMouse);
+            },
+
+            build: function (h) {
+                const sc = this.el;
+                const [x, y, z] = h.pos.split(/\s+/).map(Number);
+                const item = {
+                    h, open: false, near: false, touching: false, appear: 0, anim: 1, dist: Infinity,
+                    rays: new Set(), mesh: null, fx: null,
+                    radius: h.radius || 3.5,
+                    worldPos: new THREE.Vector3(x, y, z)
+                };
+
+                // هدف التصويب (شفاف تماماً): بيخلي الليزر والتصويب يلقطوا التمثال بسهولة
+                const m = document.createElement('a-entity');
+                m.setAttribute('class', 'hotspot');
+                m.setAttribute('geometry', 'primitive: sphere; radius: 0.35; segmentsWidth: 8; segmentsHeight: 6');
+                m.setAttribute('material', 'shader: flat; opacity: 0; transparent: true; depthWrite: false');
+                m.setAttribute('position', x + ' ' + y + ' ' + z);
+                m.addEventListener('raycaster-intersected', (e) => { item.rays.add(e.detail.el); });
+                m.addEventListener('raycaster-intersected-cleared', (e) => { item.rays.delete(e.detail.el); });
+                m.addEventListener('loaded', () => {
+                    document.querySelectorAll('[raycaster]').forEach((r) => {
+                        if (r.components && r.components.raycaster) r.components.raycaster.refreshObjects();
+                    });
+                });
+                sc.appendChild(m);
+                item.marker = m;
+
+              
+                const p = document.createElement('a-entity');
+                p.setAttribute('position', x + ' ' + (y + (h.lift || 1.0)) + ' ' + z);
+                sc.appendChild(p);
+                p.object3D.visible = false;
+                item.panel = p;
+
+                this.makeFx(item);
+                this.items.push(item);
+                return item;
+            },
+
+            // الدايرة التنبيهية: حلقة ذهبية بتنبض + موجة بتتوسع + نقطة في النص
+            makeFx: function (item) {
+                const mk = (geo, color, op) => {
+                    const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+                        color: color, transparent: true, opacity: op, depthTest: false, depthWrite: false,
+                        side: THREE.DoubleSide, toneMapped: false
+                    }));
+                    mesh.renderOrder = 998;
+                    return mesh;
+                };
+                const grp = new THREE.Group();
+                const ring   = mk(new THREE.RingGeometry(0.17, 0.21, 48), 0xffd76a, 0.95);
+                const ripple = mk(new THREE.RingGeometry(0.17, 0.19, 48), 0xffffff, 0.8);
+                const dot    = mk(new THREE.CircleGeometry(0.06, 24), 0xfff0b0, 1);
+                const label  = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.2), this.getLabelMat());
+                label.position.set(0, 0.42, 0);
+                label.renderOrder = 999;
+                label.visible = false;
+                grp.add(ring, ripple, dot, label);
+                grp.visible = false;
+                item.marker.object3D.add(grp);
+                item.fx = { grp, ring, ripple, dot, label };
+            },
+
+            // لافتة صغيرة (للـ VR فقط): "اضغطي الزناد"
+            getLabelMat: function () {
+                if (this.labelMat) return this.labelMat;
+                const c = document.createElement('canvas');
+                c.width = 640; c.height = 160;
+                const x = c.getContext('2d');
+                x.fillStyle = '#0d2a52';
+                x.beginPath();
+                if (x.roundRect) x.roundRect(6, 6, 628, 148, 74); else x.rect(6, 6, 628, 148);
+                x.fill();
+                x.lineWidth = 8; x.strokeStyle = '#e8c35a'; x.stroke();
+                x.direction = 'rtl'; x.textAlign = 'center'; x.textBaseline = 'middle';
+                x.fillStyle = '#ffe9a8';
+                x.font = 'bold 58px "Segoe UI", Tahoma, Arial, sans-serif';
+                x.fillText('اضغطي الزناد للمعلومات', 320, 84);
+                const tex = new THREE.CanvasTexture(c);
+                if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+                this.labelMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false, toneMapped: false });
+                return this.labelMat;
+            },
+
+            // فتح تمثال وقفل الباقي
+            openOnly: function (it) {
+                this.items.forEach((o) => { o.open = false; });
+                it.open = true;
+                it.anim = 0;
+            },
+
+            // ضغطة زرار: يفتح/يقفل أقرب تمثال متنبّه (أو اللي الليزر/التصويب عليه)
+            press: function (handEl) {
+                let target = null, best = Infinity;
+                for (let i = 0; i < this.items.length; i++) {
+                    const it = this.items[i];
+                    if (!it.near) continue;
+                    let score = it.dist;
+                    if (handEl ? it.rays.has(handEl) : it.rays.size > 0) score = -1;
+                    if (score < best) { best = score; target = it; }
+                }
+                if (!target) return;
+                if (target.open) target.open = false; else this.openOnly(target);
+            },
+
+            showHint: function (item) {
+                if (item === this.hintItem) return;
+                this.hintItem = item;
+                if (item) {
+                    this.hint.innerHTML = 'اضغطي <kbd>F</kbd> أو كليك لمعرفة معلومات عن <b>' + esc(item.h.name) + '</b>';
+                    this.hint.classList.add('on');
+                } else {
+                    this.hint.classList.remove('on');
+                }
+            },
+
+            removeItem: function (item) {
+                if (!item) return;
+                if (this.current === item) this.showCard(null);
+                if (item.marker.parentNode) item.marker.parentNode.removeChild(item.marker);
+                if (item.panel.parentNode) item.panel.parentNode.removeChild(item.panel);
+                const i = this.items.indexOf(item);
+                if (i >= 0) this.items.splice(i, 1);
+            },
+
+         
+            makePanel: function (item) {
+                const h = item.h, width = h.size || 1.7;
+
+                // قياس الكارت بالخط الحقيقي
+                const host = document.createElement('div');
+                host.style.cssText = 'position:fixed;left:-99999px;top:0;';
+                host.innerHTML = cardHTML(h, 'static');
+                const card = host.firstElementChild;
+                card.style.fontSize = '34px';
+                document.body.appendChild(host);
+                const cw = card.offsetWidth, ch = card.offsetHeight;
+
+                const wrap = document.createElement('div');
+                const style = document.createElement('style');
+                style.textContent = CARD_CSS;
+                wrap.appendChild(style);
+                wrap.appendChild(card);
+                const xml = new XMLSerializer().serializeToString(wrap);
+                document.body.removeChild(host);
+
+                const S = 1.5;
+                const cvs = document.createElement('canvas');
+                cvs.width = Math.round(cw * S);
+                cvs.height = Math.round(ch * S);
+                const ctx = cvs.getContext('2d');
+
+                const tex = new THREE.CanvasTexture(cvs);
+                if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+                tex.anisotropy = 4;
+
+                const mesh = new THREE.Mesh(
+                    new THREE.PlaneGeometry(width, width * ch / cw),
+                    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false, toneMapped: false })
+                );
+                mesh.renderOrder = 999;
+                item.panel.object3D.add(mesh);
+                item.mesh = mesh;
+
+                const fallback = () => {
+                    const c = this.fallbackCanvas(h);
+                    tex.image = c;
+                    tex.needsUpdate = true;
+                    mesh.geometry.dispose();
+                    mesh.geometry = new THREE.PlaneGeometry(width, width * c.height / c.width);
+                };
+
+                const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + cw + '" height="' + ch + '">' +
+                            '<foreignObject x="0" y="0" width="' + cw + '" height="' + ch + '">' + xml + '</foreignObject></svg>';
+                const img = new Image();
+                img.onload = () => {
+                    try {
+                        ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+                        ctx.getImageData(0, 0, 1, 1); // لو المتصفح اعتبره tainted هيرمي خطأ
+                        tex.needsUpdate = true;
+                    } catch (err) { fallback(); }
+                };
+                img.onerror = fallback;
+                img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+            },
+
+            // خطة بديلة بسيطة لو المتصفح منع تحويل الـ CSS لصورة
+            fallbackCanvas: function (h) {
+                const W = 1024, pad = 44, font = '"Segoe UI", Tahoma, Arial, sans-serif';
+                const c = document.createElement('canvas');
+                c.width = W;
+                const x = c.getContext('2d');
+                const wrapText = (t, px) => {
+                    x.font = px + 'px ' + font;
+                    const words = String(t || '').split(/\s+/), lines = [];
+                    let line = '';
+                    words.forEach((w) => {
+                        const tt = line ? line + ' ' + w : w;
+                        if (x.measureText(tt).width > W - pad * 2 && line) { lines.push(line); line = w; } else line = tt;
+                    });
+                    if (line) lines.push(line);
+                    return lines;
+                };
+                const t = wrapText(h.name, 60), b = wrapText(h.desc, 38), f = h.fact ? wrapText('☥ ' + h.fact, 34) : [];
+                const H = Math.max(260, pad * 2 + t.length * 74 + b.length * 54 + f.length * 48 + 40);
+                c.height = H;
+                x.direction = 'rtl'; x.textAlign = 'right';
+                const tx = W - pad;
+                x.fillStyle = 'rgba(11,35,71,0.95)';
+                x.beginPath();
+                if (x.roundRect) x.roundRect(6, 6, W - 12, H - 12, 36); else x.rect(6, 6, W - 12, H - 12);
+                x.fill();
+                x.lineWidth = 6; x.strokeStyle = '#e8c35a'; x.stroke();
+                let y = pad + 52;
+                x.fillStyle = '#e8c35a'; x.font = 'bold 60px ' + font;
+                t.forEach((l) => { x.fillText(l, tx, y); y += 74; });
+                y += 10; x.fillStyle = '#fff'; x.font = '38px ' + font;
+                b.forEach((l) => { x.fillText(l, tx, y); y += 54; });
+                y += 10; x.fillStyle = '#ffe58a'; x.font = '34px ' + font;
+                f.forEach((l) => { x.fillText(l, tx, y); y += 48; });
+                return c;
+            },
+
+            showCard: function (item) {
+                if (item === this.current) return;
+                this.current = item;
+                if (item) {
+                    this.slot.innerHTML = cardHTML(item.h);
+                    this.slot.classList.add('on');
+                } else {
+                    this.slot.classList.remove('on');
+                }
+            },
+
+            tick: function (time, dt) {
+                const sc = this.el, cam = sc.camera;
+                if (!cam || !this.items.length) return;
+                dt = Math.min(dt || 16, 100);
+                const t = time / 1000;
+
+                cam.getWorldPosition(this.camPos);
+                const xr = !!(sc.renderer && sc.renderer.xr && sc.renderer.xr.isPresenting);
+
+                this.hands.length = 0;
+                if (xr) {
+                    const l = document.querySelector('#hand-l'), r = document.querySelector('#hand-r');
+                    if (l) this.hands.push(l.object3D);
+                    if (r) this.hands.push(r.object3D);
+                }
+
+                let openItem = null, hintItem = null, hintDist = Infinity;
+
+                for (let i = 0; i < this.items.length; i++) {
+                    const it = this.items[i];
+
+                    this.tmp.subVectors(it.worldPos, this.camPos);
+                    const dist = this.tmp.length();
+                    it.dist = dist;
+
+                 
+                    const hovered = it.rays.size > 0;
+                    it.near = hovered || dist < (it.near ? it.radius * 1.25 : it.radius);
+
+                    
+                    let touch = false;
+                    for (let j = 0; j < this.hands.length; j++) {
+                        this.hands[j].getWorldPosition(this.handPos);
+                        if (this.handPos.distanceTo(it.worldPos) < (it.touching ? 0.65 : 0.45)) { touch = true; break; }
+                    }
+                    if (touch && !it.touching) this.openOnly(it);
+                    it.touching = touch;
+
+                 
+                    if (it.open && !hovered && dist > it.radius * 1.5) it.open = false;
+
+                 
+                    const target = (it.near && !it.open) ? 1 : 0;
+                    const diff = target - it.appear;
+                    it.appear += Math.sign(diff) * Math.min(Math.abs(diff), dt / 280);
+                    this.updateFx(it, t, dist, xr);
+
+               
+                    if (it.open) {
+                        if (!openItem) openItem = it;
+                        if (xr) {
+                            if (!it.mesh) this.makePanel(it);
+                            it.panel.object3D.visible = true;
+                            it.panel.object3D.lookAt(this.camPos);
+                            if (it.anim < 1) {
+                                it.anim = Math.min(1, it.anim + dt / 700);
+                                const e = 1 - Math.pow(1 - it.anim, 3);
+                                it.panel.object3D.scale.set(1, Math.max(0.02, e), 1);
+                                it.mesh.material.opacity = Math.min(1, it.anim * 2.5);
+                            }
+                        } else {
+                            it.panel.object3D.visible = false;
+                        }
+                    } else {
+                        it.panel.object3D.visible = false;
+                    }
+
+                    if (it.near && !it.open && dist < hintDist) { hintDist = dist; hintItem = it; }
+                }
+
+                this.showCard(xr ? null : openItem);
+                this.showHint(xr || openItem ? null : hintItem);
+            },
+
+            updateFx: function (it, t, dist, xr) {
+                const fx = it.fx, a = it.appear;
+                if (!fx) return;
+                if (a < 0.001) { fx.grp.visible = false; return; }
+                fx.grp.visible = true;
+
+                const pop = 1 - Math.pow(1 - a, 3);
+                fx.grp.scale.setScalar(Math.max(0.8, dist * 0.28) * pop);  
+                fx.grp.lookAt(this.camPos);                               
+
+                fx.ring.scale.setScalar(1 + 0.1 * Math.sin(t * 5));       
+                const p = (t * 0.9) % 1;                                   
+                fx.ripple.scale.setScalar(1 + p * 1.8);
+                fx.ripple.material.opacity = (1 - p) * 0.8;
+                fx.dot.scale.setScalar(0.8 + 0.25 * Math.sin(t * 5 + 1));
+                fx.label.visible = xr;
+            }
+        });
+
+     
+        AFRAME.registerComponent('static-model', {
+            init: function () {
+                this.doubleSided = false;
+                this.mats = [];
+
+                this.el.addEventListener('model-loaded', () => {
+                    const root = this.el.object3D;
+                    root.updateMatrixWorld(true);
+                    const maxAniso = Math.min(4, this.el.sceneEl.renderer.capabilities.getMaxAnisotropy());
+
+                    root.traverse((node) => {
+                        node.matrixAutoUpdate = false;
+                        node.matrixWorldAutoUpdate = false;
+                        if (!node.isMesh || !node.material) return;
+                        const mats = Array.isArray(node.material) ? node.material : [node.material];
+                        mats.forEach((m) => {
+                            this.mats.push(m);
+                            if (m.map) m.map.anisotropy = maxAniso;
+                        });
+                    });
+                });
+
+                window.addEventListener('keydown', (e) => {
+                    if (e.code !== 'KeyB') return;
+                    this.doubleSided = !this.doubleSided;
+                    this.mats.forEach((m) => {
+                        m.side = this.doubleSided ? THREE.DoubleSide : THREE.FrontSide;
+                        m.needsUpdate = true;
+                    });
+                });
+            }
+        });
+
+       
+        AFRAME.registerComponent('auto-quality', {
+            schema: {
+                target:   { type: 'number', default: 58 },
+                minRatio: { type: 'number', default: 0.5 },
+                maxRatio: { type: 'number', default: 1.25 }
+            },
+
+            init: function () {
+                this.ratio = Math.min(window.devicePixelRatio || 1, this.data.maxRatio);
+                this.acc = 0;
+                this.frames = 0;
+                this.cooldown = 3000;
+                this.fpsEl = document.querySelector('#fps-hud');
+                this.el.addEventListener('renderstart', () => this.apply());
+            },
+
+            apply: function () {
+                const sc = this.el;
+                if (!sc.renderer) return;
+                sc.renderer.setPixelRatio(this.ratio);
+                if (typeof sc.resize === 'function') sc.resize();
+            },
+
+            tick: function (time, dt) {
+                if (!dt || !this.el.renderer) return;
+                if (this.el.renderer.xr && this.el.renderer.xr.isPresenting) return;
+
+                this.acc += dt;
+                this.frames++;
+                this.cooldown -= dt;
+                if (this.acc < 1000) return;
+
+                const fps = (this.frames * 1000) / this.acc;
+                if (this.fpsEl) this.fpsEl.textContent = Math.round(fps) + ' FPS  |  res ×' + this.ratio.toFixed(2);
+                this.acc = 0;
+                this.frames = 0;
+                if (this.cooldown > 0) return;
+
+                const d = this.data;
+                let next = this.ratio;
+                if (fps < d.target - 8 && this.ratio > d.minRatio) next = Math.max(d.minRatio, this.ratio - 0.15);
+                else if (fps >= d.target && this.ratio < Math.min(window.devicePixelRatio || 1, d.maxRatio)) next = Math.min(d.maxRatio, this.ratio + 0.05);
+
+                if (next !== this.ratio) {
+                    this.ratio = next;
+                    this.apply();
+                    this.cooldown = 2500;
+                }
+            }
+        });
+
+        const room = document.querySelector('#room');
+        const loading = document.querySelector('#loading');
+        room.addEventListener('model-loaded', () => { loading.style.display = 'none'; });
+        room.addEventListener('model-error', () => { loading.textContent = 'Could not load the 3D model.'; });
+    </script>
+
+</body>
+
+</html>
