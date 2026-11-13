@@ -1,0 +1,126 @@
+/* Artifact detail page.
+   The "stage" keeps the same aspect ratio as its museum photo, so the model,
+   the info card and the name plate can be placed in % and stay lined up
+   with the display case and plinth in the photo. */
+
+.stage {
+    position: relative;
+    aspect-ratio: 1121 / 712;
+    background: url("../assets/images/museum-hall.webp") center / cover no-repeat;
+}
+
+.stage model-viewer {
+    position: absolute;
+    top: 14%;
+    left: 38.5%;
+    width: 26%;
+    height: 42%;
+    transform: translateX(-50%);
+}
+
+.plate {
+    position: absolute;
+    top: 66.5%;
+    left: 38.5%;
+    width: 34%;
+    margin: 0;
+    transform: translateX(-50%);
+    color: #DADADA;
+    font-size: clamp(14px, 1.6vw, 24px);
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+
+/* Info card: gold frame around a dark blue panel */
+
+.info-card {
+    position: absolute;
+    top: 23%;
+    right: 3.6%;
+    width: min(455px, 36%);
+    padding: 14px;
+    border: 2px solid var(--gold);
+    border-radius: 24px;
+    background: linear-gradient(160deg, #3a2a0c, #0b0904 60%);
+    box-shadow: 0 0 30px rgba(199, 153, 61, 0.35);
+}
+
+.info-panel {
+    padding: 36px 32px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background: linear-gradient(160deg, rgba(14, 32, 66, 0.96), rgba(6, 16, 36, 0.96));
+}
+
+.info-panel .display {
+    margin-bottom: 22px;
+    font-size: 36px;
+}
+
+.info-text {
+    position: relative;
+    margin: 0;
+    padding-left: 20px;
+    border-left: 2px solid var(--cream);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+}
+
+/* opening quote mark sitting on the left rule */
+.info-text::before {
+    content: "\201C";
+    position: absolute;
+    top: -12px;
+    left: -9px;
+    padding-bottom: 4px;
+    background: #0c1c3a;
+    color: var(--cream);
+    font: 700 34px/1 "Cormorant Garamond", serif;
+}
+
+.info-text .gold { color: var(--gold); }
+
+.info-panel .btn { margin-top: 24px; }
+
+
+/* Tablet + mobile use the tall corridor photo and put the card above the case */
+@media (max-width: 1199px) {
+    .stage {
+        aspect-ratio: 780 / 1341;
+        background-image: url("../assets/images/museum-hall-portrait.webp");
+        background-position: center bottom;
+    }
+
+    .info-card {
+        top: 12.5%;
+        left: 50%;
+        right: auto;
+        width: min(400px, 100% - 40px);
+        transform: translateX(-50%);
+    }
+
+    .info-panel { padding: 30px 28px; }
+    .info-text { font-size: 14px; }
+
+    .stage model-viewer { top: 57%; left: 50%; width: 50%; height: 23%; }
+    .plate { top: 87.5%; left: 50%; width: 60%; font-size: 20px; }
+}
+
+@media (max-width: 639px) {
+    .stage { aspect-ratio: 402 / 875; }
+
+    .info-card { top: 14%; width: calc(100% - 64px); padding: 10px; border-radius: 18px; }
+    .info-panel { padding: 22px 20px; border-radius: 12px; }
+    .info-panel .display { margin-bottom: 12px; font-size: 26px; }
+    .info-text { padding-left: 12px; font-size: 10px; letter-spacing: 1.8px; }
+    .info-text::before { top: -8px; left: -7px; font-size: 24px; }
+    .info-panel .btn { margin-top: 16px; padding: 9px 18px; font-size: 11px; }
+
+    .stage model-viewer { width: 70%; }
+    .plate { width: 80%; font-size: 16px; }
+}
